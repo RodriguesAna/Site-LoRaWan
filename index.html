@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="img/icon.png">
+    <link rel="stylesheet" href="style.css">
+    <title>LoRaWAN Website</title>
+</head>
+<body>
+    <header>
+        <img src="img/cabecalho.jpeg">
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#introducao">Introdução</a></li>
+            <li><a href="#sobre">Sobre</a></li>
+            <li><a href="#conclusao">Conclusão</a></li>
+            <li><a href="#referencias">Referências</a></li>
+            <li><a href="#contato">Contato</a></li>
+        </ul>
+    </nav>
+
+    <section id="introducao">
+        <h2>Introdução</h2><br>
+        <p>
+            Desde que o conceito <i>IoT ("Internet of Things")</i> se popularizou, os desenvolvedores da área trabalharam
+            dia e noite para criar um protocolo de comunicação que suprisse algumas necessidades do mercado. As duas
+            principais necessidades do mercado eram o baixo consumo de energia e o longo alcance de conectividade. A
+            princípio isso parecia impossível, já que são coisas que parecem inversamente proporcionais.
+        </p><br>
+
+        <p>Entretanto, em meados de 2015, a organização <i>LoRA Alliance</i> lançou o protocolo de comunicação
+            <i>LoRaWAN ("Long Range Wide Area Network")</i>, baseado na tecnologia LoRa da Semtech, que foi capaz de
+            alcançar um longo alcance com um baixíssimo consumo de energia. Neste tutorial iremos aprender um pouco
+            sobre este protocolo de comunicação tão recente, suas classes, seus métodos de comunicação, seus
+            concorrentes e como ele funciona.<br><br>
+        </p>
+
+        <h2><strong>LoRa Vs. LoRaWAN</strong></h2>
+        <figure><img src="img/logo.png" alt="Logo LoRaWAN"></figure>
+        <div>Fonte: LoRa Alliance</div><br><br>
+
+        <p>
+            <strong>LoRa</strong> é um protocolo de comunicação de baixo consumo de energia e longo alcance para
+            dispositivos de radiofrequência. A sua modulação é excelente para comunicações P2P (<i>"Point to Point"</i>,
+            Ponto a Ponto), porém estes dispositivos são capazes de usar apenas a camada de base das aplicações.
+        </p><br>
+
+        <p>
+            <strong>LoRaWAN</strong>, por sua vez, é um protocolo baseado em <strong>LoRa</strong>, porém que foi
+            sofisticado para acessar as camadas mais altas da aplicação, como demonstrado na imagem abaixo, e integrar a
+            comunicação dos dispositivos com a internet. Outro fator importante é que os dispositivos
+            <strong>LoRaWAN</strong> não são apenas módulos de radiofrequência, eles são compostos de microcontroladores
+            dedicados e outros componentes, responsáveis por conectar o dispositivo à rede e garantir a segurança da
+            conexão.
+        </p><br>
+
+        <figure><img src="img/aplicacao.png"></figure>
+    </section>
+
+    <section id="sobre">
+        <h2>Estrutura do Protocolo</h2><br>
+
+        <p>
+            Para que uma mensagem enviada de um dispositivo LoRaWAN chegue à plataforma final, ela deve passar por
+                alguns pontos, como na imagem a seguir.
+        </p>
+        <figure><img src="img/estrutura.jpg"></figure>
+
+        <div>Fonte: Profissionais TI</div><br><br>
+
+        <p>
+            Os <i>"End Nodes"</i>, ou "<i>End Devices</i>", representam os dispositivos LoRaWAN remotos, como o
+            LoRaWAN Bee. Estes dispositivos enviam e recebem informações dos "Gateways", ou "Concentrators" como
+            também são conhecidos, que representam basicamente as antenas de conexão, como as da ATC
+            <i>("American Tower Corporation</i>"), por exemplo. Da antena de conexão, as informações trocadas
+            com os dispositivos são enviadas pela internet para o <i>"Network Server"</i>, que é responsável por
+            encaminhar corretamente as mensagens de um certo dispositivo para sua respectiva aplicação final, ou
+            no sentido inverso. Por fim, as informações chegam ao <i>"Application Server"</i>, que representa a
+            plataforma onde são finalmente exibidas, ou de onde partem, as informações da comunicação, como a
+            <i>PROIoT</i>, por exemplo.
+        </p><br>
+
+        <h2>Classes do Protocolo</h2><br>
+        <p>
+            Note, na imagem da seção de comparação entre os protocolos LoRa e LoRaWAN, que o protocolo LoRaWAN é
+            subdividido em três categorias: a classe <strong>"A"</strong>, a classe <strong>"B"</strong> e a
+            classe <strong>"C"</strong>. Estas classes representam três tipos de dispositivos com padrões de
+            requisições e envio de dados distintos.
+        </p><br>
+
+        <p>
+            A classe <strong>"A"</strong> representa uma sigla de <i>"All"</i> (Todos/Tudo), pois todas as outras
+            classes deste protocolo (<strong>"B"</strong> e <strong>"C"</strong>) são capazes de se comportar
+            como esta classe. Os dispositivos de classe <strong>"A"</strong> apresentam o menor consumo de
+            energia, pois embora eles possam enviar dados a qualquer momento, eles só aguardam por uma resposta
+            do servidor durante um breve período determinado. Nesta classe, o dispositivo cria duas janelas de
+            recepção de resposta do servidor após o envio da mensagem, e ele pode receber esta resposta na
+            primeira janela (Rx1), na segunda janela (Rx2), ou não receber resposta em nenhuma delas, como nas
+            imagens a seguir. No entanto, o dispositivo nunca receberá a mesma resposta nas duas janelas.
+        </p><br>
+
+        <figure><img src="img/r1.png"></figure>
+        <div>Mensagem Recebida na Primeira Janela<br>
+            Fonte: LoRa Developers
+        </div><br>
+
+        <figure><img src="img/r2.png"></figure>
+        <div>Mensagem Recebida na Segunda Janela<br>
+            Fonte: LoRa Developers
+        </div><br>
+
+        <figure><img src="img/r3.png"></figure>
+        <div>Mensagem Não Recebida</br>
+            Fonte: LoRa Developers
+        </div><br>
+
+        <p>Já a classe <strong>"B"</strong> representa a sigla de <i><strong>"Beacon"</strong></i>
+            (Farol/Sinaleiro), pois os envios são "guiados". Nesta classe, o dispositivo recebe sinais
+            (<i>"beacon"</i>) de tempos em tempos para sincronizar o seu relógio interno com o do
+            <i>"gateway"</i>. Depois desta sincronização, o dispositivo abre janelas de recepção de mensagens do
+            servidor com uma frequência predefinida, como na imagem abaixo.
+        </p><br>
+
+        <figure><img src="img/class1.png"></figure>
+        <div>Exemplo de Comportamento da Classe B<br>
+            Fonte: Mobilefish.com
+        </div><br>
+
+        <p>
+            A classe <strong>"C"</strong>, por sua vez, representa a sigla de <i>"Continuous"</i> (Contínuo),
+            que, como o próprio nome já diz, mantém o dispositivo ouvindo continuamente por uma resposta do
+            servidor, como na próxima imagem. Entretanto, devido ao seu método de funcionamento, este tipo de
+            dispositivo é o que consome mais energia entre todas as classes.
+        </p><br>
+
+        <figure><img src="img/class2.png"></figure>
+        <div>Exemplo de Comportamento da Classe C<br>
+            Fonte: Mobilefish.com
+        </div><br><br>
+
+        <h2>Métodos de Conexão</h2><br>
+
+        <p>
+            O protocolo LoRaWAN possui dois métodos de conexão, sendo eles o <strong>"OTAA"</strong> ("Over
+            The Air Activation") e o <strong>"ABP"</strong> ("Activation By Personalization"). Estes dois
+            métodos podem ser utilizados independentemente da classe do dispositivo e cada um exige uma
+            configuração distinta.
+        </p>
+
+        <p>
+            O método <strong>"OTAA"</strong> utiliza apenas três dados do dispositivo para conectá-lo à rede,
+            sendo eles a "Application EUI", sua respectiva <i>"Application Key"<i> e a <i>"Device EUI"</i>.
+            Com essas informações, o dispositivo envia uma requisição de conexão ao servidor
+            juntamente com um <i>"Device Nonce"</i> (um contador para garantir que não ocorram
+            conexões duplicadas), e, caso os dados estejam corretos e válidos, o servidor retorna a
+            requisição com a confirmação e com alguns dados sobre a rede, que são salvos no
+            dispositivo, como na imagem a seguir.
+        </p>
+
+        <figure><img src="img/requisicao.png"></figure>
+        <div>Exemplo de Requisição e Resposta de Conexão OTAA<br>
+            Fonte: Research Gate
+        </div><br><br>
+
+        <p>
+            A grande vantagem deste tipo de conexão é que as chaves de sessão (<i>"Network Session Key</i>" e
+            <i>"Application Session Key"</i>) são geradas somente quando requisitadas, o que aumenta a
+            segurança da conectividade. Entretanto, como o <i>"Device EUI"</i> deve ser único na rede, é
+            necessário configurar cada dispositivo com uma identificação única no mundo, outro ponto
+            negativo é que o dispositivo deve ser capaz de gerar as chaves de segurança dinamicamente.
+        </p>
+
+        <p>
+            O método <strong>"ABP"</strong>, por sua vez, requer apenas que sua sessão seja configurada,
+            através de um <i>"Device Address"</i>, uma <i>"Application Session Key"</i> e uma
+            <i>"Network Session Key"</i>, que são configurados diretamente no dispositivo. Estes mesmos
+            dados devem ser configurados no servidor, como na próxima imagem.
+        </p>
+
+        <figure><img src="img/conexão.png"></figure>
+        <div>Fonte: Newie Ventures</div><br>
+
+        <p>
+            Nesta configuração, os dispositivos não precisam da autorização prévia da rede, logo não
+            dependem da capacidade de gerar as chaves de segurança dinamicamente. Entretanto, este
+            método acaba sendo menos seguro que o "OTAA", já que as chaves de segurança estão
+            armazenados no dispositivo. Outro ponto importante é que, caso o dispositivo precise mudar
+            de rede, tanto ele quanto a rede devem ser reconfigurados com novos parâmetros de conexão.
+        </p><br><br>
+
+        <h2>Curiosidades LoRaWAN</h2><br>
+        <p>Sabia que o record mundial do alcance da comunicação LoRaWAN é de 832km?</p>
+        <figure><img src="img/lorawan.png"><br></figure>
+
+        <p>
+            Foi no dia 16 de abril de 2020 que se quebrou o recorde de uma comunicação LoRaWAN realizada,
+            alcançando uns incríveis 832km!
+        </p>
+
+        <p>
+            Esta proeza foi realizada por Thomas Telkamp, CTO e cofundador da Lacuna Space, que instalou
+            um sensor LoRaWAN num balão cheio de gás hélio. Após esta instalação, o balão foi lançado na
+            Holanda e voou para leste, em direção à Alemanha, percorrendo cerca de 200 km de distância
+            em 4 horas e 25 minutos. Momentos antes de iniciar o movimento descendente, a 38 km de
+            altitude, um sinal emitido pelo sensor instalado no próprio balão, foi intercetado por uma
+            gateway na República Checa. A torre que recebeu o sinal encontra-se na montanha Radhost,
+            próxima da fronteira com a Eslováquia, a 832 km de distância de onde partiu o sinal!
+        </p>
+
+        <p>
+            A teoria que justifica esta distância enorme percorrida pelo sinal assenta na existência de
+            dutos de evaporação atmosférica, capazes de curvar sinais de rádio
+        </p>
+
+        <p>
+            Mesmo após cerca de 5 anos do aparecimento da comunicação LoRaWAN, ainda muito temos para
+            descobrir sobre esta tecnologia! No entanto, todos podemos confirmar e concordar que se
+            trata de um protocolo revolucionário que que irá, certamente, impactar positivamente a forma
+            como realizamos transferências e comunicação de dados!
+        </p><br>
+
+        <h2>Vantagens da comunicação LoRaWAN</h2><br>
+
+        <p>A utilização deste protocolo de comunicação na sua atividade apresenta um vasto conjunto de
+            benefícios que permitirá, não só utilizar uma tecnologia mais avançada e segura, mas também
+            reduzir consumos energéticos e outras poupanças financeiras. Alguns destes benefícios passam
+            por:
+        </p>
+
+        <ul>
+            <li>Custos de implementação e operação muito reduzidos;</li>
+            <li>Baixo consumo de potência;</li>
+            <li>Comunicação de longo alcance;</li>
+            <li>Mobilidade;</li>
+            <li>Padronizado;</li>
+            <li>Alto nível de segurança.</li>
+        </ul>
+
+        <figure><img src="img/vidaUtil.png"></figure><br><br>
+
+        <h2>Aplicações LoRaWAN</h2><br>
+        <p>As principais aplicações da implementação de um protocolo de comunicação LoRaWAN são
+            maioritariamente no campo da IoT – Internet of Things - como sensores e pontos de recolha de
+            dados remotos, como sensores de pressão e luminosidade, sensores on-off, sondas de
+            temperatura ou equipamentos alimentados a bateria que comuniquem por meio de mensagens
+            curtas.
+        </p>
+
+        <p>
+            O protocolo LoRaWAN procura estabelecer ligações seguras, atendendo a todos os detalhes de
+            funcionamento e cumprindo com todas as normas de segurança, qualidade do serviço e ajustes
+            da própria potência. A utilização desta comunicação visa não só maximizar a duração da
+            bateria dos módulos e os tipos de aplicações tanto do lado do equipamento e servidor, como
+            também implementar e simplificar toda a arquitetura de comunicação dos seus sistemas.
+        </p><br><br>
+    </section>
+
+    <section id="conclusao">
+        <h2>Conclusão</h2><br>
+        <p>
+            Concluímos que a LoRaWAN é uma tecnologia de rede de longo alcance de baixo consumo de
+            energia que é ideal para dispositivos IoT (Internet das Coisas). Ele é baseado no
+            protocolo LoRa, que é um protocolo de comunicação sem fio de longo alcance e baixo
+            consumo de energia.
+        </p>
+        <p>LoRaWAN oferece uma série de vantagens sobre outras tecnologias de rede IoT, incluindo:</p>
+
+        <ul>
+            <li>Longo alcance: LoRaWAN pode alcançar distâncias de até 15 km em áreas abertas e até
+                1 km em áreas urbanas.</li>
+            <li>Baixo consumo de energia: LoRaWAN é projetado para dispositivos IoT que operam com
+                baterias.</li>
+            <li>Consumo de rede reduzido: LoRaWAN usa um protocolo de comunicação eficiente, o que
+                reduz o consumo de rede.</li>
+            <li>Segurança: LoRaWAN oferece suporte a uma variedade de recursos de segurança, como
+                criptografia e autenticação.</li>
+        </ul>
+
+        <p>Essas vantagens tornam LoRaWAN uma tecnologia ideal para uma ampla gama de aplicações IoT, incluindo:</p>
+
+        <ul>
+            <li>Monitoramento ambiental: LoRaWAN pode ser usado para monitorar o ambiente, como
+                temperatura, umidade e qualidade do ar.</li>
+            <li>Gestão de ativos: LoRaWAN pode ser usado para gerenciar ativos, como rastreamento de
+                ativos e monitoramento de ativos.</li>
+            <li>Segurança: LoRaWAN pode ser usado para segurança, como monitoramento de alarmes e
+                controle de acesso.</li>
+            <li>Logística: LoRaWAN pode ser usado para logística, como rastreamento de veículos e
+                monitoramento de carga.</li>
+        </ul>
+
+        <p>
+            LoRaWAN é uma tecnologia em rápido crescimento e está sendo adotada por uma ampla gama de
+            empresas e organizações. É uma tecnologia promissora que tem o potencial de revolucionar
+            a forma como interagimos com o mundo ao nosso redor.
+        </p><br>
+    </section>
+
+    <section id="referencias" class="ref">
+        <h2>Referências:</h2><br>
+            <a href="https://zenzorcontrol.pt/pt/lorawan-o-que-e" style="text-align: center;"> LoRaWAN - O que é? | ZenzorControl -
+            Soluções de Instrumentação
+        </a><br><br>
+        <a href="https://www.robocore.net/tutoriais/lorawan-conceitos-basicos"> LoRaWAN - Conceitos
+            Básicos - Tutoriais - RoboCore
+        </a>
+    </section>
+
+    <section id="contato">
+        <footer>
+            <address>
+                <h3>Contato</h3>
+                Email: ana.paula@lorawanwebsite.com<br>
+                Phone: (64) 99999-000<br>
+                &copy; 2023 LoRaWAN Theme
+            </address>
+        </footer>
+    </section>
+
+    <div class="totop">
+        <a id="scroll-ups" class="scroll-ups" href="#">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0 0h24v24H0z" fill="none"></path>
+                <path fill="rgba(255,255,255,1)" d="M11.9997 10.8284L7.04996 15.7782L5.63574 14.364L11.9997 8L18.3637 14.364L16.9495 15.7782L11.9997 10.8284Z">
+                </path>
+            </svg>
+        </a>
+    </div>
+</body>
+</html>

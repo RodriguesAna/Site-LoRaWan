@@ -1,0 +1,129 @@
+body, h1, h2, p {
+    margin: 0;
+    padding: 0;
+    background: #FFFFF0;
+}
+
+/* Basic styling */
+body {
+    font-family: Arial, sans-serif;
+}
+h2 {
+    text-align: center;
+}
+div {
+    text-align: center;
+}
+p {
+    text-align: justify;
+}
+header img {
+    width: 100%;
+    height: auto;
+}
+img {
+    display: block;
+    margin: 0 auto;
+}
+figure img {
+    border: 8px solid white;
+    box-shadow: 1px 1px 4px black;
+}
+nav ul {
+    display: flex;
+    justify-content: space-around;
+    background-color: #255191;
+    padding: 10px;
+    position: absolute;
+    list-style-type: none;
+    top: 20px;
+    left: 20px;
+}
+nav {
+    background-color: #255191;
+}
+
+nav a {
+    text-decoration: none;
+    color: white;
+    padding: 0.5rem 1rem;
+}
+
+section {
+    padding: 3rem;
+}
+
+.ref {
+    text-align: center;
+}
+
+.referencias {
+    height: auto;
+    align-items: center;
+}
+
+
+footer {
+    background-color: #255191;
+    color: white;
+    text-align: center;
+    padding: 0.0rem;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 20%;
+}
+
+footer p {
+    text-align: center;
+}
+/* Responsive design */
+@media screen and (max-width: 768px) {
+    nav ul {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+
+/* <reset-style> ============================ */
+a {
+    text-decoration: none;
+    float: right;
+}
+
+/* <main-style> ============================ */
+.scroll-ups {
+    /* position: fixed; */
+    right: 3rem;
+    bottom: -150%;
+    z-index: 10;
+    width: 32px;
+    height: 32px;
+    border-radius: 4px;
+    background-color: rgba(33, 125, 230, 0.7);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    transition: bottom .4s, transform .4s;
+    margin: 10px;
+}
+
+.scroll-ups:hover {
+    transform: translateY(-.25rem);
+}
+
+/* Show scroll-up */
+._show-scroll {
+    bottom: 3rem;
+}
+
+@media (max-width: 1199.98px) {
+    .scroll-ups {
+        right: 1rem;
+    }
+}
